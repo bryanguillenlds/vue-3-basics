@@ -12,6 +12,11 @@ const person = {
   },
 } // as const; // as const is used to make the object immutable, so we can't change the value of the properties
 
+const person2 = structuredClone(person); // clone the object, even deeply nested properties
+
 console.log(person);
-console.log(person.address);
-console.log(person.address.country);
+console.log(person2);
+
+/* OBJECT DESTRUCTURING */
+const { name, lastName, age, address } = person;
+console.log({ name, lastName, age, address });
