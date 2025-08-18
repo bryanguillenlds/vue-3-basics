@@ -7,7 +7,7 @@ export type Hero = {
 };
 
 
-const heroes = [
+const heroes: Hero[] = [
 	{
 		id: 1,
 		name: 'Batman',
