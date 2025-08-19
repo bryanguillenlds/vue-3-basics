@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hello World Vue</title>
+</head>
+<body>
+	<!-- Vue allows you to build somethign with it in a single file without your whole app having to be written in Vue
+	 You just target the id where you want to build your app-->
+	<div id="app">
+
+		<h1>{{ message }}</h1>
+		<p>from app.js</p>
+		<p>--{{ author }}</p>
+
+		<button @click="changeQuote">Change Quote</button>
+	</div>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>

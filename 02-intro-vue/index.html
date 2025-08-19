@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hello World Vue</title>
+</head>
+<body>
+	<div id="myApp">
+      <h1>Quotes</h1>
+      <hr>
+      <!-- v-for is a directive that allows you to loop through an array and display the items in the array -->
+      <!-- :key is a directive that allows you to specify a unique key for each item in the array -->
+      <!-- index is a variable that allows you to access the index of the current item in the array -->
+      <li v-for="(quote, index) in quotes" :key="quote.id">
+        <span>{{ index + 1 }}: {{ quote.quote }}</span>
+        <!-- v-if is a directive that allows you to conditionally display an element.
+         Adds or removes from DOM. Triggers lifecycle. -->
+        <!-- v-show will always render the element, but will just hide it if the condition is false.
+         Does not trigger lifecycle -->
+        <blockquote v-if="showAuthor">--{{ quote.author }}</blockquote>
+      </li>
+      <button @click="showAuthor = !showAuthor">Toggle Author</button>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
