@@ -8,6 +8,15 @@
 <body>
 	<div id="myApp">
       <h1>Quotes</h1>
+      <!-- v-model is a directive that allows you to bind an input to a variable
+       Two way binding. Meaning that the variable is updated when the input is changed
+       and the input is updated when the variable is changed-->
+      <input
+        type="text"
+        placeholder="Add Quote"
+        v-model="newQuote"
+        @keypress.enter="addQuote"
+      >
       <hr>
       <!-- v-for is a directive that allows you to loop through an array and display the items in the array -->
       <!-- :key is a directive that allows you to specify a unique key for each item in the array -->
@@ -21,6 +30,8 @@
         <blockquote v-if="showAuthor">--{{ quote.author }}</blockquote>
       </li>
       <button @click="showAuthor = !showAuthor">Toggle Author</button>
+      <button @click="addQuote">Add Quote</button>
+      <p>Total Quotes: {{ totalQuotes }}</p>
   </div>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="app.js"></script>

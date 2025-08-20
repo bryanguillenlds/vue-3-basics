@@ -1,4 +1,4 @@
-const { createApp, ref } = Vue
+const { createApp, ref, computed } = Vue
 
 const app = createApp({
 
@@ -27,11 +27,31 @@ const app = createApp({
 			}
 		]);
 
+		const newQuote = ref('');
+
 		const showAuthor = ref(true);
+
+		// At this point, quotes is not the original quotes array. it is wrapped by a ref that has a value property
+		// value is the actual array. So we need to access the value property to get the original array.
+		const totalQuotes = computed(() => {
+			return quotes.value.length;
+		});
+
+		const addQuote = () => {
+			quotes.value.push({
+				quote: newQuote.value,
+				author: 'Another Another Another John Doe'
+			});
+
+			newQuote.value = ''; //This is needed to clear the input field
+		}
 
 		return {
 			quotes,
-			showAuthor
+			showAuthor,
+			newQuote,
+			addQuote,
+			totalQuotes
 		}
 	}
 })
