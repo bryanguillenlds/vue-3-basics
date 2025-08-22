@@ -3,9 +3,9 @@
 		<h3>{{ count }}</h3>
 		<h3>{{ squaredCount }}</h3>
 
-		<div>
-			<button @click="count++">+1</button>
-			<button @click="count--">-1</button>
+		<div class="flex gap-2">
+			<button class="bg-blue-500 text-white p-5 rounded-md mr-2" @click="count++">+1</button>
+			<button class="bg-red-500 text-white p-5 rounded-md" @click="count--">-1</button>
 		</div>
 	</section>
 </template>
@@ -14,7 +14,7 @@
 //setup keyword is so that you don't have to use setup in the script tag
 //this already tells it what to do
 
-import { ref, computed, defineProps } from 'vue';
+import { useCounter } from '../composables/useCounter';
 
 /* Option 1: Runtime Props (JavaScript-style with TypeScript)
 // PROS:
@@ -56,11 +56,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const count = ref(props.value);
-
-const squaredCount = computed(() => {
-	return count.value * count.value;
-});
+const { count, squaredCount } = useCounter(props.value); //Using composable and passing it the props
 </script>
 
 <style scoped>
