@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import type { ChatMessage } from '@/interfaces/chat-message-interface';
 import ChatBubble from '@/components/chat/chatBubble.vue';
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 
 interface Props {
 	messages: ChatMessage[];
@@ -29,17 +29,29 @@ const chatRef = ref<HTMLDivElement | null>(null);
 
 /*
 	Watch the messages array and scroll to the bottom when it changes
-	Watch reacts to any message changes, not just on initial mount
-*/
-watch(props.messages, () => {
-	// We need a timeout to ensure the DOM is updated before scrolling
-	setTimeout(() => {
-		if (!chatRef.value) return;
+	IMPORTANT: We use a getter function () => props.messages instead of props.messages directly
 
-		chatRef.value.scrollTo({
-			top: chatRef.value.scrollHeight,
-			behavior: 'smooth'
-		});
-	}, 100);
-});
+	Why? Because:
+	- Direct watching (watch(props.messages, ...)) watches the specific array object in memory
+	- When setProps() is called in tests, Vue creates a NEW array at a different memory location
+	- Direct watching misses this change because it's watching the old array
+	- Getter watching (watch(() => props.messages, ...)) always checks the current value
+	- This ensures we catch changes even when the array object is completely replaced
+*/
+watch(
+	() => props.messages,
+	() => {
+		console.log('messages changed');
+		// We need a timeout to ensure the DOM is updated before scrolling
+		setTimeout(() => {
+			if (!chatRef.value) return;
+
+			chatRef.value.scrollTo({
+				top: chatRef.value.scrollHeight,
+				behavior: 'smooth'
+			});
+		}, 100);
+	},
+	{ deep: true }
+);
 </script>
