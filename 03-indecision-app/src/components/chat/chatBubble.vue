@@ -19,5 +19,5 @@ interface Props {
 	image: string | null;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 </script>
