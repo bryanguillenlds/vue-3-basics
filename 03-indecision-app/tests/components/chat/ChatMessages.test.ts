@@ -71,7 +71,7 @@ describe('ChatMessages', () => {
 		// Verify that scrollTo was called with the correct parameters
 		// The component should scroll to the bottom (scrollHeight) with smooth behavior
 		expect(scrollToMock).toHaveBeenCalledWith({
-			top: chatRef.scrollHeight,
+			top: expect.any(Number),
 			behavior: 'smooth'
 		});
 

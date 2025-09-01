@@ -41,7 +41,6 @@ const chatRef = ref<HTMLDivElement | null>(null);
 watch(
 	() => props.messages,
 	() => {
-		console.log('messages changed');
 		// We need a timeout to ensure the DOM is updated before scrolling
 		setTimeout(() => {
 			if (!chatRef.value) return;
