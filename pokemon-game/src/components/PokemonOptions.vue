@@ -1,15 +1,20 @@
 <template>
-  <section class="mt-5">
-    <ul>
-      <li
-        v-for="pokemon in pokemonOptions"
-        :key="pokemon.id"
-        class="capitalize"
-        @click="$emit('selectedOption', pokemon.id)"
-      >
-        {{ pokemon.name }}
-      </li>
-    </ul>
+  <section class="mt-5 flex flex-col gap-2">
+    <button
+      v-for="pokemon in pokemonOptions"
+      :key="pokemon.id"
+      :class="[
+        'capitalize disabled:shadow-none disabled:bg-gray-100',
+        {
+          correct: pokemon.id === correctAnswer && blockedSelection,
+          incorrect: pokemon.id !== correctAnswer && blockedSelection
+        }
+      ]"
+      :disabled="blockedSelection"
+      @click="$emit('selectedOption', pokemon.id)"
+    >
+      {{ pokemon.name }}
+    </button>
   </section>
 </template>
 
@@ -18,6 +23,8 @@ import type { Pokemon } from '@/modules/pokemon/interfaces/pokemon.interface';
 
 interface Props {
   pokemonOptions: Pokemon[];
+  blockedSelection: boolean;
+  correctAnswer: number;
 }
 
 defineProps<Props>();
@@ -28,8 +35,17 @@ defineEmits<{
 </script>
 
 <style scoped>
-@reference '@/assets/styles.css';
-li {
+@import 'tailwindcss';
+
+button {
   @apply bg-white shadow-md rounded-md p-3 m-2 cursor-pointer w-40 text-center transition-all hover:bg-gray-100;
+}
+
+.correct {
+  @apply bg-green-500;
+}
+
+.incorrect {
+  @apply bg-red-500;
 }
 </style>
