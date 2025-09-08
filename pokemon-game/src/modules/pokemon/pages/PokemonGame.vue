@@ -13,6 +13,7 @@
       v-if="gameStatus === GameStatus.won || gameStatus === GameStatus.lost"
       class="mb-5 text-2xl capitalize text-gray-500"
       @click="playAgain"
+      data-testid="play-again-button"
     >
       {{ gameStatus === GameStatus.won ? 'Play Again' : 'Try Again' }}
     </button>
