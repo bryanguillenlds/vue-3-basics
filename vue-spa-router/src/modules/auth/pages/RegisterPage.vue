@@ -1,9 +1,20 @@
 <template>
 	<h1 class="text-2xl font-semibold mb-4">Register</h1>
 	<form action="#" method="POST">
+		<!-- Name Input -->
+		<div class="mb-4">
+			<label for="name" class="block text-gray-600">Full Name</label>
+			<input
+				type="text"
+				id="name"
+				name="name"
+				class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
+				autocomplete="off"
+			/>
+		</div>
 		<!-- Username Input -->
 		<div class="mb-4">
-			<label for="username" class="block text-gray-600">Username</label>
+			<label for="username" class="block text-gray-600">Username or Email</label>
 			<input
 				type="text"
 				id="username"
@@ -38,7 +49,7 @@
 	</form>
 	<!-- Login  Link -->
 	<div class="mt-6 text-blue-500 text-center">
-		<a href="{ name: 'login' }" class="hover:underline">Login Here</a>
+		<RouterLink :to="{ name: 'login' }" class="hover:underline">Login Here</RouterLink>
 	</div>
 </template>
 
