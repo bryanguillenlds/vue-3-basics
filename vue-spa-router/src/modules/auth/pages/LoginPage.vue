@@ -42,7 +42,7 @@
 	</form>
 	<!-- Sign up  Link -->
 	<div class="mt-6 text-blue-500 text-center">
-		<a href="#" class="hover:underline">Sign up Here</a>
+		<RouterLink :to="{ name: 'register' }" class="hover:underline">Sign up Here</RouterLink>
 	</div>
 </template>
 

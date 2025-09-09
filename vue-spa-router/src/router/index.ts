@@ -33,6 +33,7 @@ const router = createRouter({
 		{
 			path: '/auth',
 			name: 'auth',
+			redirect: { name: 'login' },
 			component: () => import('@/modules/auth/layouts/AuthLayout.vue'),
 			children: [
 				{
@@ -46,6 +47,11 @@ const router = createRouter({
 					component: () => import('@/modules/auth/pages/LoginPage.vue')
 				}
 			]
+		},
+		{
+			path: '/:catchAll(.*)*',
+			name: 'not-found',
+			component: () => import('@/modules/not-found/pages/NotFoundPage.vue')
 		}
 	]
 });
