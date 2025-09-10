@@ -41,7 +41,8 @@
 		</div>
 		<!-- Register Button -->
 		<button
-			type="submit"
+			@click="onRegister"
+			type="button"
 			class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full"
 		>
 			Register
@@ -53,6 +54,14 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const onRegister = () => {
+	router.replace({ name: 'login' });
+};
+</script>
 
 <style scoped></style>

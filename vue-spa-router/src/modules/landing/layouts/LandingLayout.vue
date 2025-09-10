@@ -1,7 +1,9 @@
 <template>
 	<div class="flex flex-col h-screen">
 		<!-- Header -->
-		<header class="flex items-center h-14 px-4 border-b border-gray-300 sm:h-16 md:px-6 lg:px-8">
+		<header
+			class="flex items-center h-14 px-4 py-4 border-b border-gray-300 sm:h-16 md:px-6 lg:px-8"
+		>
 			<!-- <div>
 				<a class="flex items-center gap-2 font-semibold" href="#">
 					<img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="40" height="40" />
@@ -15,6 +17,7 @@
 					<RouterLink to="/contact"> Contact </RouterLink>
 				</div>
 				<div class="space-x-4">
+					<RouterLink to="/pokemon/1"> Pokemon </RouterLink>
 					<RouterLink to="/auth/login"> Login </RouterLink>
 				</div>
 			</nav>
