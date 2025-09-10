@@ -34,7 +34,8 @@
 		</div>
 		<!-- Login Button -->
 		<button
-			type="submit"
+			@click="onLogin"
+			type="button"
 			class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full"
 		>
 			Login
@@ -46,6 +47,21 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const onLogin = () => {
+	localStorage.setItem('userId', 'ABC-123');
+	const lastPath = localStorage.getItem('lastPath');
+	if (lastPath) {
+		router.replace(lastPath);
+	} else {
+		// We use replace instead of push to prevent the user from going back to the login page
+		router.replace({ name: 'home' });
+	}
+};
+</script>
 
 <style scoped></style>
