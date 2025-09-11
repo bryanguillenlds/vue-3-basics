@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 interface Props {
-	id: string;
+	id: number;
 }
 
 defineProps<Props>();

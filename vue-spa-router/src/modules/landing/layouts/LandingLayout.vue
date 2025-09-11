@@ -26,7 +26,13 @@
 
 		<!-- Main -->
 		<main class="flex-1 flex items-center justify-center">
-			<RouterView />
+			<!-- We use keep-alive to keep the component alive when the user navigates between routes
+			 So we don't lose the state of the component without the need for state management -->
+			<RouterView v-slot="{ Component }">
+				<keep-alive>
+					<component :is="Component" />
+				</keep-alive>
+			</RouterView>
 		</main>
 		<!-- End Main -->
 
