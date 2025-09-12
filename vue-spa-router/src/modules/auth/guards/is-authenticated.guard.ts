@@ -5,8 +5,8 @@ const isAuthenticatedGuard = (
 	from: RouteLocationNormalized,
 	next: NavigationGuardNext
 ) => {
-	// Store the last path the user was trying to access
-	localStorage.setItem('lastPath', to.path);
+	// Store the last path the user is trying to access
+	localStorage.setItem('attemptedPath', to.path);
 
 	if (localStorage.getItem('userId')) {
 		next();
