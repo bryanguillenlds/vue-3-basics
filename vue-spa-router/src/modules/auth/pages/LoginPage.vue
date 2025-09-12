@@ -54,9 +54,10 @@ const router = useRouter();
 
 const onLogin = () => {
 	localStorage.setItem('userId', 'ABC-123');
-	const lastPath = localStorage.getItem('lastPath');
-	if (lastPath) {
-		router.replace(lastPath);
+	const attemptedPath = localStorage.getItem('attemptedPath');
+
+	if (attemptedPath) {
+		router.replace(attemptedPath);
 	} else {
 		// We use replace instead of push to prevent the user from going back to the login page
 		router.replace({ name: 'home' });
