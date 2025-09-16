@@ -5,23 +5,28 @@
     :open="isModalOpen"
   >
     <div class="modal-box">
-      <h3 class="text-lg font-bold flex justify-center">Add Project</h3>
-      <p class="text-sm text-center text-gray-400">
-        Be sure to fill out all fields
+      <h3 class="text-lg font-bold flex justify-center">{{ title }}</h3>
+      <p
+        v-if="subTitle"
+        class="text-sm text-center text-gray-400"
+      >
+        {{ subTitle }}
       </p>
       <div class="modal-action flex flex-col gap-2">
         <form @submit.prevent="submitForm">
           <input
+            ref="inputRef"
             class="input input-bordered input-primary w-full flex-1 mb-2"
             type="text"
-            placeholder="Project Name"
+            :placeholder="placeholder ?? 'Add a name for your project'"
             v-model="inputValue"
           />
 
           <div class="flex justify-end gap-2">
             <button
               class="btn btn-secondary mt-4"
-              @click="emit('toggleModal')"
+              @click="closeModal"
+              type="button"
             >
               Close
             </button>
@@ -44,17 +49,37 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
 
   interface Props {
     isModalOpen: boolean;
+    placeholder: string;
+    title: string;
+    subTitle: string;
   }
 
   const inputValue = ref('');
+  const inputRef = ref<HTMLInputElement | null>(null);
 
-  withDefaults(defineProps<Props>(), {
-    isModalOpen: false
+  const props = withDefaults(defineProps<Props>(), {
+    isModalOpen: false,
+    placeholder: 'Add a name for your project',
+    title: 'Add Project',
+    subTitle: 'Be sure to fill out all fields'
   });
+
+  // Watch for modal opening and focus the input
+  watch(
+    () => props.isModalOpen,
+    (isOpen) => {
+      if (isOpen) {
+        // Add a small delay to ensure dialog is fully rendered
+        setTimeout(() => {
+          inputRef.value?.focus();
+        }, 100);
+      }
+    }
+  );
 
   const emit = defineEmits<{
     toggleModal: [void];
@@ -65,6 +90,9 @@
     console.log('submitForm');
     if (!inputValue.value.trim()) {
       //focus element
+      if (inputRef.value) {
+        inputRef.value.focus();
+      }
       return;
     }
 
@@ -72,6 +100,11 @@
     emit('toggleModal');
 
     inputValue.value = '';
+  };
+
+  const closeModal = () => {
+    inputValue.value = '';
+    emit('toggleModal');
   };
 </script>
 
