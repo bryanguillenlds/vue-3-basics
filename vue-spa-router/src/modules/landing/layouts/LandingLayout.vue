@@ -28,8 +28,18 @@
 		<main class="flex-1 flex items-center justify-center">
 			<!-- We use keep-alive to keep the component alive when the user navigates between routes
 			 So we don't lose the state of the component without the need for state management -->
+			<!-- RouterView uses a scoped slot to intercept the component that Vue Router wants to render
+     Vue Router determines which component to display based on the current route
+     The v-slot="{ Component }" gives us access to that component before RouterView renders it
+     This allows us to wrap the routed component with additional functionality like keep-alive -->
 			<RouterView v-slot="{ Component }">
+				<!-- keep-alive prevents the component from being destroyed when navigating away
+       This preserves component state (form data, scroll position, etc.) without needing Vuex/Pinia
+       When you navigate back to the route, the component is restored exactly as you left it -->
 				<keep-alive>
+					<!-- component :is="Component" dynamically renders whatever component RouterView provides
+         Component comes from Vue Router's route matching, not from a child component
+         This is the actual routed component (like HomeView, AboutView, etc.) -->
 					<component :is="Component" />
 				</keep-alive>
 			</RouterView>

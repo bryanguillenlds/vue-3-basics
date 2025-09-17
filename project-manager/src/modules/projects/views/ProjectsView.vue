@@ -7,11 +7,22 @@
       </thead>
       <tbody>
         <!-- row 1 -->
-        <tr class="hover:bg-base-300">
-          <th>2</th>
-          <td>Hart Hagerty</td>
-          <td>Desktop Support Technician</td>
-          <td>Purple</td>
+        <tr
+          v-for="(project, index) in projectsStore.projectList"
+          :key="project.id"
+          class="hover:bg-base-300"
+        >
+          <th>{{ index + 1 }}</th>
+          <td>{{ project.name }}</td>
+          <td>{{ project.tasks.length }}</td>
+          <td>{{ project.tasks.filter((task) => task.completedAt).length }}</td>
+          <td>
+            <progress
+              class="progress progress-secondary w-56"
+              value="15"
+              max="100"
+            ></progress>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -69,9 +80,12 @@ import AddIcon from '@/modules/common/icons/AddIcon.vue';
 import InfoIcon from '@/modules/common/icons/InfoIcon.vue';
 import InputModal from '@/modules/projects/components/InputModal.vue';
 import CustomModal from '@/modules/common/components/CustomModal.vue';
+import { useProjectsStore } from '@/modules/projects/store/projects.store';
 
 const isModalOpen = ref(false);
 const isCustomModalOpen = ref(false);
+
+const projectsStore = useProjectsStore();
 
 const toggleModal = () => {
   isModalOpen.value = !isModalOpen.value;
@@ -81,8 +95,8 @@ const toggleCustomModal = () => {
   isCustomModalOpen.value = !isCustomModalOpen.value;
 };
 
-const onSaveProject = (project: string) => {
-  console.log('saveProject', project);
+const onSaveProject = (projectName: string) => {
+  projectsStore.addProject(projectName);
 };
 </script>
 
