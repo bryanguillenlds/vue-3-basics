@@ -5,7 +5,6 @@
   "tabWidth": 2,
   "bracketSpacing": true,
   "htmlWhitespaceSensitivity": "ignore",
-  "vueIndentScriptAndStyle": true,
   "singleAttributePerLine": true,
   "printWidth": 80,
   "trailingComma": "none"
