@@ -21,7 +21,14 @@
               :key="task.id"
               class="hover:bg-base-300"
             >
-              <th>2</th>
+              <td>
+                <input
+                  type="checkbox"
+                  :checked="!!task.completedAt"
+                  class="checkbox checkbox-primary"
+                  @change="onToggleTaskCompletion(task.id)"
+                />
+              </td>
               <td>{{ task.name }}</td>
               <td>{{ task.completedAt }}</td>
             </tr>
@@ -30,8 +37,8 @@
               <th></th>
               <td>
                 <input
-                  v-model="newTask"
                   type="text"
+                  v-model="newTaskName"
                   class="input input-primary w-full opacity-70 transition-all hover:opacity-100 focus:opacity-100"
                   placeholder="New Task"
                   @keyup.enter="onAddTaskToProject"
@@ -51,7 +58,6 @@ import { useProjectsStore } from '@/modules/projects/store/projects.store';
 import { computed, watch, ref } from 'vue';
 import BreadCrumbs from '@/modules/common/components/BreadCrumbs.vue';
 import { useRouter } from 'vue-router';
-import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   id: string;
@@ -61,7 +67,8 @@ const router = useRouter();
 
 const projectsStore = useProjectsStore();
 
-const newTask = ref('');
+const newTaskName = ref('');
+
 const props = defineProps<Props>();
 
 // We make it a computed so that it is reactive to changes
@@ -85,16 +92,15 @@ watch(
 );
 
 const onAddTaskToProject = () => {
-  if (!newTask.value.trim()) return;
-  const payload = {
-    id: uuidv4(),
-    name: newTask.value.trim(),
-    completedAt: null
-  };
+  if (!newTaskName.value.trim()) return;
 
-  projectsStore.addTaskToProject(props.id, payload);
+  projectsStore.addTaskToProject(props.id, newTaskName.value);
 
-  newTask.value = ''; //reset the input
+  newTaskName.value = ''; //reset the input
+};
+
+const onToggleTaskCompletion = (taskId: string) => {
+  projectsStore.toggleTaskCompletion(props.id, taskId);
 };
 </script>
 

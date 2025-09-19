@@ -18,14 +18,49 @@ export const useProjectsStore = defineStore('projects', () => {
     });
   };
 
-  const addTaskToProject = (projectId: string, task: Task) => {
+  const addTaskToProject = (projectId: string, taskName: string) => {
     // find the project that we are adding onto
     // add task to project and useLocalStorage will automatically update the projects
-    const project = projects.value.find((project) => project.id === projectId);
+    const project = projects.value.find((p) => p.id === projectId);
+
+    const payload = {
+      id: uuidv4(),
+      name: taskName.trim(),
+      completedAt: null
+    } as Task;
+
     if (project) {
-      project.tasks.push(task);
+      project.tasks.push(payload);
     }
   };
+
+  const toggleTaskCompletion = (projectId: string, taskId: string) => {
+    const project = projects.value.find((p) => p.id === projectId);
+
+    const task = project?.tasks.find((t) => t.id === taskId);
+
+    if (task) {
+      task.completedAt = task.completedAt ? null : new Date();
+    }
+  };
+
+  const projectListWithProgress = computed(() => {
+    return projects.value.map((project) => {
+      const completedTasks = project.tasks.filter(
+        (task) => task.completedAt
+      ).length;
+
+      const totalTasks = project.tasks.length;
+
+      const progress =
+        totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+
+      return {
+        ...project,
+        progress
+      };
+    });
+  });
 
   return {
     // Properties
@@ -33,10 +68,12 @@ export const useProjectsStore = defineStore('projects', () => {
 
     // Getters
     projectList: computed(() => [...projects.value]),
+    projectListWithProgress,
     noProjects: computed(() => projects.value.length === 0),
 
     // Actions
     addProject,
-    addTaskToProject
+    addTaskToProject,
+    toggleTaskCompletion
   };
 });

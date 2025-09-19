@@ -3,23 +3,25 @@
     <table class="table">
       <!-- head -->
       <thead>
-        <tr></tr>
+        <th>#Project</th>
+        <th>Project Name</th>
+        <th>#Tasks</th>
+        <th>Progress</th>
       </thead>
       <tbody>
         <!-- row 1 -->
         <tr
-          v-for="(project, index) in projectsStore.projectList"
+          v-for="(project, index) in projectsStore.projectListWithProgress"
           :key="project.id"
           class="hover:bg-base-300"
         >
-          <th>{{ index + 1 }}</th>
+          <td>{{ index + 1 }}</td>
           <td>{{ project.name }}</td>
           <td>{{ project.tasks.length }}</td>
-          <td>{{ project.tasks.filter((task) => task.completedAt).length }}</td>
           <td>
             <progress
               class="progress progress-secondary w-56"
-              value="15"
+              :value="project.progress"
               max="100"
             ></progress>
           </td>
