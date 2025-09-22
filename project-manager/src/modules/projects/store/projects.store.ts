@@ -8,6 +8,24 @@ export const useProjectsStore = defineStore('projects', () => {
   // useLocalStorage comes from the @vueuse/core package and allows us to store the projects in the browser's local storage
   const projects = ref(useLocalStorage<Project[]>('projects', []));
 
+  const projectListWithProgress = computed(() => {
+    return projects.value.map((project) => {
+      const completedTasks = project.tasks.filter(
+        (task) => task.completedAt
+      ).length;
+
+      const totalTasks = project.tasks.length;
+
+      const progress =
+        totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
+
+      return {
+        ...project,
+        progress
+      };
+    });
+  });
+
   const addProject = (projectName: string) => {
     if (projectName.trim().length === 0) return;
 
@@ -43,24 +61,6 @@ export const useProjectsStore = defineStore('projects', () => {
       task.completedAt = task.completedAt ? null : new Date();
     }
   };
-
-  const projectListWithProgress = computed(() => {
-    return projects.value.map((project) => {
-      const completedTasks = project.tasks.filter(
-        (task) => task.completedAt
-      ).length;
-
-      const totalTasks = project.tasks.length;
-
-      const progress =
-        totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
-
-      return {
-        ...project,
-        progress
-      };
-    });
-  });
 
   return {
     // Properties
