@@ -50,4 +50,42 @@ describe('useProjectsStore', () => {
 
     expect(projectsStore.projectList).toHaveLength(projectsMock.length);
   });
+
+  test('should add a task to a project', () => {
+    const projectsStore = useProjectsStore();
+    const testTaskName = 'Test Task';
+
+    projectsStore.addProject('Test Project');
+
+    const project = projectsStore.projectList[0];
+
+    projectsStore.addTaskToProject(project.id, testTaskName);
+
+    expect(project.tasks).toHaveLength(1);
+
+    expect(project.tasks).toEqual([
+      {
+        id: expect.any(String),
+        name: testTaskName,
+        completedAt: null
+      }
+    ]);
+  });
+
+  test('toggles task completion', () => {
+    const projectsStore = useProjectsStore();
+    const testTaskName = 'Test Task';
+
+    projectsStore.addProject('Test Project');
+
+    const project = projectsStore.projectList[0];
+
+    projectsStore.addTaskToProject(project.id, testTaskName);
+
+    const task = project.tasks[0];
+
+    projectsStore.toggleTaskCompletion(project.id, task.id);
+
+    expect(task.completedAt).toEqual(expect.any(Date));
+  });
 });
